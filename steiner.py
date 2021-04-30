@@ -73,7 +73,10 @@ def steiner(n):
         switch(state,n,x,y,z)
 
     for i in range(len(state)):
-        state[i] = tuple(sorted(list(state[i])))
+        state[i] = sorted(list(state[i]))
+        for j in range(len(state[i])):
+            state[i][j] += 1
+        state[i] = tuple(state[i])
     state.sort()
         
     return state
@@ -81,8 +84,8 @@ def steiner(n):
 def check(state,n):
     flag = True
     cnt_dict = dict()
-    for i in range(n):
-        for j in range(i + 1, n):
+    for i in range(1,n + 1):
+        for j in range(i + 1, n + 1):
             cnt_dict[(i,j)] = 0
             cnt_dict[(j,i)] = 0
     for obj in state:
@@ -90,8 +93,8 @@ def check(state,n):
             for j in range(i + 1,len(obj)):
                 cnt_dict[(obj[i],obj[j])] += 1
                 cnt_dict[(obj[j],obj[i])] += 1
-    for i in range(n):
-        for j in range(i + 1, n):
+    for i in range(1,n + 1):
+        for j in range(i + 1, n + 1):
             if cnt_dict[(i,j)] != 1:
                 print(i,j,cnt_dict[(i,j)])
                 flag = False
